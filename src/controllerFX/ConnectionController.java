@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import server.Server;
 
 public class ConnectionController implements Initializable{
 
@@ -23,20 +24,26 @@ public class ConnectionController implements Initializable{
 
 	private String pseudo;
 
+	public String getPseudo() {
+		return pseudo;
+	}
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {}
 
 	public void connectAction() throws Exception{
-		this.pseudo = pseudoField.getText();
+		setPseudo(pseudoField.getText());
 		Stage secondStage = (Stage) connectButton.getScene().getWindow();
 		Parent root = FXMLLoader.load(getClass().getResource("../viewFX/Chat.fxml"));
 		Scene scene = new Scene(root);
 		secondStage.setScene(scene);
 		secondStage.show();
-		//System.out.println(pseudo);
+		Server server = new Server();
+		Server.getMyComponent().connect(pseudo);
 	}
-
-
 
 }
