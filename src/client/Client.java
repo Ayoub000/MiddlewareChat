@@ -13,11 +13,17 @@ import javafx.stage.Stage;
 
 public class Client extends Application {
 
+	static private Dialogue myComponent;
+	public static Dialogue getMyComponent() {
+		return myComponent;
+	}
+
 	public static void main(String[] args) {
-		Dialogue myComponent;
+
 		try {
 			//example of a RMI URL use to retrieve a remote reference
 			myComponent = (Dialogue) Naming.lookup("rmi://localhost:1099/Dialogue");
+
 		} catch (MalformedURLException | RemoteException | NotBoundException e ) {
 			e.printStackTrace();
 		}

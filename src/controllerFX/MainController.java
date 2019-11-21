@@ -4,6 +4,7 @@ import java.net.URL;
 
 import java.util.ResourceBundle;
 
+import client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import server.Server;
 
-public class ConnectionController implements Initializable{
+public class MainController implements Initializable{
 
 	@FXML
 	private Button connectButton;
@@ -24,11 +25,11 @@ public class ConnectionController implements Initializable{
 
 	private String pseudo;
 
-	public String getPseudo() {
+	protected String getPseudo() {
 		return pseudo;
 	}
 
-	public void setPseudo(String pseudo) {
+	protected void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
 	}
 
@@ -37,13 +38,13 @@ public class ConnectionController implements Initializable{
 
 	public void connectAction() throws Exception{
 		setPseudo(pseudoField.getText());
+		Client.getMyComponent().connect(pseudo);
 		Stage secondStage = (Stage) connectButton.getScene().getWindow();
 		Parent root = FXMLLoader.load(getClass().getResource("../viewFX/Chat.fxml"));
 		Scene scene = new Scene(root);
 		secondStage.setScene(scene);
 		secondStage.show();
-		Server server = new Server();
-		Server.getMyComponent().connect(pseudo);
+		
 	}
 
 }
