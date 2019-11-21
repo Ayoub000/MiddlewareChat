@@ -42,6 +42,7 @@ public class ChatController extends MainController implements Initializable {
 	private Button sendButton;
 
 	private String clientChoisi;
+	private String clientt;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -71,12 +72,7 @@ public class ChatController extends MainController implements Initializable {
 
 	public void clientAction()
 	{
-		listClients.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-				clientChoisi = arg2;
-			}
-		});
+		clientChoisi=listClients.getSelectionModel().getSelectedItem().toString();
 		System.out.println(clientChoisi);
 	}
 
