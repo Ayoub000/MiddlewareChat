@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import client.Client;
+import client.Informations;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 
-public class ChatController extends MainController implements Initializable {
+public class ChatController implements Initializable {
 
 	@FXML
 	private AnchorPane anchor;
@@ -42,7 +43,6 @@ public class ChatController extends MainController implements Initializable {
 	private Button sendButton;
 
 	private String clientChoisi;
-	private String clientt;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -58,6 +58,13 @@ public class ChatController extends MainController implements Initializable {
 		}
 		ObservableList<String> items=FXCollections.observableArrayList(list);
 		listClients.setItems(items);
+		try {
+
+			ObservableList<String> messages=FXCollections.observableArrayList(Client.getMyComponent().getMessages(Informations.getPseudo()));
+			messageList.setItems(messages);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -67,36 +74,33 @@ public class ChatController extends MainController implements Initializable {
 		Scene scene = new Scene(root);
 		secondStage.setScene(scene);
 		secondStage.show();
-		Client.getMyComponent().disconnect(getPseudo());
+		Client.getMyComponent().disconnect(Informations.getPseudo());
 	}
 
 	public void clientAction()
 	{
 		clientChoisi=listClients.getSelectionModel().getSelectedItem().toString();
-		System.out.println(clientChoisi);
+
 	}
 
 	public void sendAction() throws RemoteException
 	{
 		String message = messageInput.getText();
-		Client.getMyComponent().sendMessage(getPseudo(), clientChoisi, message);
+		Client.getMyComponent().sendMessage(Informations.getPseudo(), clientChoisi, message);
+		ObservableList<String> messages;
+		try {
+			messages = FXCollections.observableArrayList(Client.getMyComponent().getMessages(Informations.getPseudo()));
+			System.out.println(messages);
+			messageList.setItems(messages);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void newMessageAction()
 	{
 
-	}
 
-	public void newClientAction() throws RemoteException
-	{
-
-
-		/*HBox hbox = new HBox(listClients);
-		Stage primaryStage = (Stage) listClients.getScene().getWindow();
-		//Parent root = FXMLLoader.load(getClass().getResource("../viewFX/Connection.fxml"));
-        Scene scene = new Scene(hbox, 300, 120);
-        primaryStage.setScene(scene);
-        primaryStage.show();*/
 	}
 
 

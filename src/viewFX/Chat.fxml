@@ -12,7 +12,7 @@
          <children>
             <TextField fx:id="messageInput" layoutX="42.0" layoutY="460.0" prefHeight="37.0" prefWidth="422.0" />
             <Button fx:id="sendButton" layoutX="513.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#sendAction" prefHeight="30.0" prefWidth="110.0" text="Envoyer" />
-            <ListView fx:id="messageList" layoutX="32.0" layoutY="49.0" onInputMethodTextChanged="#newMessageAction" prefHeight="362.0" prefWidth="508.0" />
+            <ListView fx:id="messageList" layoutX="32.0" layoutY="49.0" prefHeight="362.0" prefWidth="508.0" />
             <Button fx:id="disconnectButton" layoutX="312.0" layoutY="540.0" mnemonicParsing="false" onMouseClicked="#disconnectAction" text="Disconnect" />
             <ListView fx:id="listClients" layoutX="568.0" layoutY="49.0" onMouseClicked="#clientAction" prefHeight="362.0" prefWidth="110.0">
 	            <items>

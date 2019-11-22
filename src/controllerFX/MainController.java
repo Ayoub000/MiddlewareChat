@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import client.Client;
+import client.Informations;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,28 +24,19 @@ public class MainController implements Initializable{
 	@FXML
 	private TextField pseudoField;
 
-	private String pseudo;
-
-	protected String getPseudo() {
-		return pseudo;
-	}
-
-	protected void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
-	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {}
 
 	public void connectAction() throws Exception{
-		setPseudo(pseudoField.getText());
-		Client.getMyComponent().connect(pseudo);
+		Informations.setPseudo(pseudoField.getText());
+		Client.getMyComponent().connect(Informations.getPseudo());
 		Stage secondStage = (Stage) connectButton.getScene().getWindow();
 		Parent root = FXMLLoader.load(getClass().getResource("../viewFX/Chat.fxml"));
 		Scene scene = new Scene(root);
 		secondStage.setScene(scene);
-		secondStage.show();
-		
+		//secondStage.show();
+
 	}
 
 }
