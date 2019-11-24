@@ -1,6 +1,8 @@
-package client;
+package modelFX;
 
 import java.rmi.RemoteException;
+
+import client.Client;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
