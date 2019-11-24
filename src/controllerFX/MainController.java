@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import client.Client;
-import client.Informations;
+import client.DataMonitor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,9 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import server.Server;
 
 public class MainController implements Initializable{
 
@@ -29,13 +27,12 @@ public class MainController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {}
 
 	public void connectAction() throws Exception{
-		Informations.setPseudo(pseudoField.getText());
-		Client.getMyComponent().connect(Informations.getPseudo());
+		DataMonitor.setPseudo(pseudoField.getText());
+		Client.getMyComponent().connect(DataMonitor.getPseudo());
 		Stage secondStage = (Stage) connectButton.getScene().getWindow();
 		Parent root = FXMLLoader.load(getClass().getResource("../viewFX/Chat.fxml"));
 		Scene scene = new Scene(root);
 		secondStage.setScene(scene);
-		//secondStage.show();
 
 	}
 

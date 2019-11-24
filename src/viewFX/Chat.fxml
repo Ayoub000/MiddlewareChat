@@ -5,22 +5,34 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllerFX.ChatController">
    <children>
-      <AnchorPane fx:id="anchor" prefHeight="600.0" prefWidth="700.0">
+      <AnchorPane prefHeight="600.0" prefWidth="700.0">
          <children>
             <TextField fx:id="messageInput" layoutX="42.0" layoutY="460.0" prefHeight="37.0" prefWidth="422.0" />
             <Button fx:id="sendButton" layoutX="513.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#sendAction" prefHeight="30.0" prefWidth="110.0" text="Envoyer" />
             <ListView fx:id="messageList" layoutX="32.0" layoutY="49.0" prefHeight="362.0" prefWidth="508.0" />
             <Button fx:id="disconnectButton" layoutX="312.0" layoutY="540.0" mnemonicParsing="false" onMouseClicked="#disconnectAction" text="Disconnect" />
-            <ListView fx:id="listClients" layoutX="568.0" layoutY="49.0" onMouseClicked="#clientAction" prefHeight="362.0" prefWidth="110.0">
+            <ListView fx:id="clientList" layoutX="568.0" layoutY="49.0" onMouseClicked="#clientAction" prefHeight="362.0" prefWidth="110.0">
 	            <items>
 	            	<FXCollections fx:factory="observableArrayList">
 
 	            	</FXCollections>
 	            </items>
             </ListView>
+            <Text layoutX="42.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discussion" wrappingWidth="95.61212921142578">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="589.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connected">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>
