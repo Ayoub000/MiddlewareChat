@@ -67,7 +67,7 @@ public class ChatController implements Initializable {
 		Scene scene = new Scene(root);
 		secondStage.setScene(scene);
 		secondStage.show();
-		Client.getMyComponent().disconnect(DataMonitor.getPseudo());
+		Client.getMyConnection().disconnect(DataMonitor.getPseudo());
 	}
 
 	public void clientAction()
@@ -86,10 +86,10 @@ public class ChatController implements Initializable {
 	{
 		String message = messageInput.getText();
 		messageInput.clear();
-		Client.getMyComponent().sendMessage(DataMonitor.getPseudo(), clientChoisi, message);
+		DataMonitor.getDial().sendMessage(clientChoisi, message);
 		ObservableList<String> messages;
 		try {
-			messages = FXCollections.observableArrayList(Client.getMyComponent().getMessages(DataMonitor.getPseudo()));
+			messages = FXCollections.observableArrayList(DataMonitor.getDial().getMessages(DataMonitor.getPseudo()));
 			messageList.setItems(messages);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -100,7 +100,7 @@ public class ChatController implements Initializable {
 	{
 		List<String> list = new  ArrayList<String>();
 		try {
-			for(Object c : Client.getMyComponent().getClients().keySet())
+			for(Object c : DataMonitor.getDial().getClients().keySet())
 			{
 				String client = (String)c;
 				if(!client.equals(DataMonitor.getPseudo()))
@@ -123,7 +123,7 @@ public class ChatController implements Initializable {
 	{
 		ObservableList<String> messages = null;
 		try {
-			messages = FXCollections.observableArrayList(Client.getMyComponent().getMessages(DataMonitor.getPseudo()));
+			messages = FXCollections.observableArrayList(DataMonitor.getDial().getMessages(DataMonitor.getPseudo()));
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

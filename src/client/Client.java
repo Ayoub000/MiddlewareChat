@@ -12,16 +12,21 @@ import javafx.stage.Stage;
 
 public class Client extends Application {
 
-	static private Dialogue myComponent;
-	public static Dialogue getMyComponent() {
+	//static private Dialogue myComponent;
+	/*public static Dialogue getMyComponent() {
 		return myComponent;
+	}*/
+	static private Connection myConnection;
+	public static Connection getMyConnection() {
+		return myConnection;
 	}
 
 	public static void main(String[] args) {
 
 		try {
 			//example of a RMI URL use to retrieve a remote reference
-			myComponent = (Dialogue) Naming.lookup("rmi://localhost:1099/Dialogue");
+		//	myComponent = (Dialogue) Naming.lookup("rmi://localhost:1099/Dialogue");
+			myConnection = (Connection) Naming.lookup("rmi://localhost:1099/Connection");
 
 		} catch (MalformedURLException | RemoteException | NotBoundException e ) {
 			e.printStackTrace();

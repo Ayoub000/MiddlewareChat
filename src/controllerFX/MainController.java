@@ -28,7 +28,7 @@ public class MainController implements Initializable{
 
 	public void connectAction() throws Exception{
 		DataMonitor.setPseudo(pseudoField.getText());
-		Client.getMyComponent().connect(DataMonitor.getPseudo());
+		DataMonitor.setDial(Client.getMyConnection().connect(DataMonitor.getPseudo()));
 		Stage secondStage = (Stage) connectButton.getScene().getWindow();
 		Parent root = FXMLLoader.load(getClass().getResource("../viewFX/Chat.fxml"));
 		Scene scene = new Scene(root);

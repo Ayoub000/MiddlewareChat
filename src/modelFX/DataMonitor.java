@@ -2,7 +2,7 @@ package modelFX;
 
 import java.rmi.RemoteException;
 
-import client.Client;
+import client.Dialogue;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -11,6 +11,7 @@ public class DataMonitor {
 	private static String pseudo;
 	private final IntegerProperty new_message;
 	private final IntegerProperty new_client;
+	private static Dialogue dial;
 
 	public DataMonitor()
 	{
@@ -18,9 +19,17 @@ public class DataMonitor {
 		new_client = new SimpleIntegerProperty();
 	}
 
+	public static Dialogue getDial() {
+		return dial;
+	}
+
+	public static void setDial(Dialogue dial) {
+		DataMonitor.dial = dial;
+	}
+
 	public void setNewClient() {
 		  try {
-			new_client.set(Client.getMyComponent().getNewClient());
+			new_client.set(dial.getNewClient());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -28,7 +37,7 @@ public class DataMonitor {
 
 	public void setNewMessage() {
 		  try {
-			new_message.set(Client.getMyComponent().getNewMessage());
+			new_message.set(dial.getNewMessage());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
