@@ -86,7 +86,7 @@ public class ChatController implements Initializable {
 	{
 		String message = messageInput.getText();
 		messageInput.clear();
-		DataMonitor.getDial().sendMessage(clientChoisi, message);
+		DataMonitor.getDial().sendMessage(DataMonitor.getPseudo(),clientChoisi, message);
 		ObservableList<String> messages;
 		try {
 			messages = FXCollections.observableArrayList(DataMonitor.getDial().getMessages(DataMonitor.getPseudo()));

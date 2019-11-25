@@ -42,10 +42,11 @@ public class DialogueImpl extends UnicastRemoteObject implements Dialogue {
 	}
 
 	@Override
-	public void sendMessage(String to, String message) {
+	public void sendMessage(String from, String to, String message) {
 		try
 		{
-			clientList.get(to).add("J'envois : "+message);
+			clientList.get(to).add("J'envois : "+message+" à "+to);
+			clientList.get(from).add("J'envois : "+message+" à "+to);
 			new_message += 1;
 		}
 		catch(NullPointerException e)

@@ -9,8 +9,8 @@ import client.Dialogue;
 
 public class ConnectionImpl extends UnicastRemoteObject implements Connection {
 
-	//private DialogueImpl dial;
-	private int new_client = 0;
+	private DialogueImpl dial;
+	private static int new_client = 0;
 
 	protected ConnectionImpl() throws RemoteException
 	{
@@ -20,25 +20,23 @@ public class ConnectionImpl extends UnicastRemoteObject implements Connection {
 	@Override
 	public Dialogue connect(String pseudo)
 	{
-		DialogueImpl dial = null;
+		dial = null;
 		try {
 			dial = new DialogueImpl();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 		dial.getClients().put(pseudo, new ArrayList<String>());
-		new_client += dial.getNewClient();
+		new_client += 1;
 		dial.setNewClient(new_client);
 		return (Dialogue)dial;
 	}
 
 	@Override
 	public void disconnect(String pseudo) {
-		/*dial.getClients().remove(pseudo);
-		new_client -= dial.getNewClient();
-		dial.setNewClient(new_client);*/
+		dial.getClients().remove(pseudo);
+		new_client -= 1;
+		dial.setNewClient(new_client);
 	}
-
-
 
 }
