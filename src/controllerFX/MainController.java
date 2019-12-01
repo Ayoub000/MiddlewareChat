@@ -1,7 +1,6 @@
 package controllerFX;
 
 import java.net.URL;
-
 import java.util.ResourceBundle;
 
 import client.Client;
@@ -14,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modelFX.DataMonitor;
+
 
 public class MainController implements Initializable{
 
@@ -28,7 +28,7 @@ public class MainController implements Initializable{
 
 	public void connectAction() throws Exception{
 		DataMonitor.setPseudo(pseudoField.getText());
-		Client.getMyComponent().connect(DataMonitor.getPseudo());
+		DataMonitor.setEmitter(Client.getMyConnection().connect(DataMonitor.getPseudo(), DataMonitor.getReceiver()));
 		Stage secondStage = (Stage) connectButton.getScene().getWindow();
 		Parent root = FXMLLoader.load(getClass().getResource("../viewFX/Chat.fxml"));
 		Scene scene = new Scene(root);

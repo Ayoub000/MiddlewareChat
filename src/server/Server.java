@@ -8,17 +8,18 @@ import java.rmi.registry.LocateRegistry;
 public class Server {
 
 	public static void main(String[] args) {
-		DialogueImpl myComponent;
+		ConnectionImpl myConnection;
+
 		try {
 			// registry creation
 			LocateRegistry.createRegistry(1099);
 
-			// component instanciation and implicit activation
-			myComponent = new DialogueImpl();
-			System.out.println(myComponent.getRef().remoteToString());
+			// component instanciation implicit activation
+			myConnection = new ConnectionImpl();
+			System.out.println(myConnection.getRef().remoteToString());
 
 			//publication of component reference in the registry
-			Naming.rebind("Dialogue", myComponent);
+			Naming.rebind("Connection", myConnection);
 
 			System.out.println("Serveur actif");
 

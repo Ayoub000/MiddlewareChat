@@ -3,6 +3,7 @@ package controllerFX;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import client.Client;
@@ -39,12 +40,12 @@ public class ChatController implements Initializable {
 	private TextField messageInput;
 
 	private String clientChoisi;
-	private DataMonitor mapMonitor;
+	private DataMonitor dataMonitor;
 	private Timeline timeline;
 
 	public ChatController()
 	{
-		mapMonitor = new DataMonitor();
+		dataMonitor = new DataMonitor();
 	}
 
 	@Override
@@ -52,11 +53,21 @@ public class ChatController implements Initializable {
 
 		infiniteTimer();
 		clientList.setItems(refresh_clients());
-		messageList.setItems(refresh_messages());
-		mapMonitor.NewMessageProperty().addListener((ObservableValue<? extends Number > observable, Number oldValue, Number newValue) -> {
+		try {
 			messageList.setItems(refresh_messages());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dataMonitor.NewMessageProperty().addListener((ObservableValue<? extends Number > observable, Number oldValue, Number newValue) -> {
+			try {
+				messageList.setItems(refresh_messages());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		});
-		mapMonitor.NewClientProperty().addListener((ObservableValue<? extends Number > observable, Number oldValue, Number newValue) -> {
+		dataMonitor.NewClientProperty().addListener((ObservableValue<? extends Number > observable, Number oldValue, Number newValue) -> {
 			clientList.setItems(refresh_clients());
 		});
 	}
@@ -67,7 +78,8 @@ public class ChatController implements Initializable {
 		Scene scene = new Scene(root);
 		secondStage.setScene(scene);
 		secondStage.show();
-		Client.getMyComponent().disconnect(DataMonitor.getPseudo());
+		Client.getMyConnection().disconnect(DataMonitor.getPseudo());
+
 	}
 
 	public void clientAction()
@@ -75,6 +87,7 @@ public class ChatController implements Initializable {
 		try
 		{
 			clientChoisi=clientList.getSelectionModel().getSelectedItem().toString();
+			clientChoisi = clientChoisi.replace(" - Moi", "");
 		}
 		catch (NullPointerException e)
 		{
@@ -86,53 +99,46 @@ public class ChatController implements Initializable {
 	{
 		String message = messageInput.getText();
 		messageInput.clear();
-		Client.getMyComponent().sendMessage(DataMonitor.getPseudo(), clientChoisi, message);
+		DataMonitor.getEmitter().sendMessage(clientChoisi, message);
 		ObservableList<String> messages;
-		try {
-			messages = FXCollections.observableArrayList(Client.getMyComponent().getMessages(DataMonitor.getPseudo()));
-			messageList.setItems(messages);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		messages = FXCollections.observableArrayList(DataMonitor.getMessages());
+		messageList.setItems(messages);
 	}
 
 	private ObservableList<String> refresh_clients()
 	{
 		List<String> list = new  ArrayList<String>();
-		try {
-			for(Object c : Client.getMyComponent().getClients().keySet())
+		for(Object c : DataMonitor.getClientList())
+		{
+			String client = (String)c;
+			if(!client.equals(DataMonitor.getPseudo()))
 			{
-				String client = (String)c;
-				if(!client.equals(DataMonitor.getPseudo()))
-				{
-					list.add(client);
-				}
-				else
-				{
-					list.add(client+" - Moi");
-				}
+				list.add(client);
 			}
-		}
-		catch (RemoteException e) {
-			e.printStackTrace();
+			else
+			{
+				list.add(client+" - Moi");
+			}
 		}
 		ObservableList<String> items=FXCollections.observableArrayList(list);
 		return items;
 	}
-	private ObservableList<String> refresh_messages()
+	private ObservableList<String> refresh_messages() throws RemoteException
 	{
 		ObservableList<String> messages = null;
-		try {
-			messages = FXCollections.observableArrayList(Client.getMyComponent().getMessages(DataMonitor.getPseudo()));
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		List<String> list = new  ArrayList<String>();
+		Iterator<String> it = DataMonitor.getMessages().iterator();
+		while(it.hasNext())
+		{
+			list.add(it.next());
 		}
+		messages = FXCollections.observableArrayList(DataMonitor.getMessages());
 		return messages;
 	}
 	private void infiniteTimer()
 	{
 		timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> {
-			mapMonitor.setNewMessage();mapMonitor.setNewClient();
+			dataMonitor.setNewMessage();dataMonitor.setNewClient();
 		}));
 	    timeline.setCycleCount(Animation.INDEFINITE);
 	    timeline.play();
