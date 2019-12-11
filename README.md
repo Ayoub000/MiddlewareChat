@@ -1,9 +1,13 @@
 # MiddlewareChat
 Welcome to this Client-Server Chat !
-
-Java Version used : 8
-
-JDK : 1.8
+----------
+**********************************
+Eclipse SDK Version: Neon (4.6)\
+Java Version : 8\
+JDK Version : 1.8\
+JUnit Version : 4\
+JavaFX : Included in JDK 1.8\ 
+**********************************
 
 This project had been developped in several architectures. Each architecture is present in a separate Git Branch and is completely independent from the others  :
 
