@@ -1,0 +1,8 @@
+client\Client.class
+client\Connection.class
+client\ReceiverImpl.class
+client\ClientMain.class
+controllerFX\ChatController.class
+client\Emitter.class
+modelFX\DataMonitor.class
+controllerFX\MainController.class
