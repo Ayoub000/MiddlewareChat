@@ -5,7 +5,7 @@ Java Version used : 8
 
 JDK : 1.8
 
-This project had been developped in several architectures. Each architecture is present in a separate Git Branch  :
+This project had been developped in several architectures. Each architecture is present in a separate Git Branch and is completely independent from the others  :
 
 - Pull Architecture (Branch : arch/pull)
 - Advanced Pull Architecture (Branch : arch/advanced_pull)
