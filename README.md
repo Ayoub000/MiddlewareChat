@@ -1,6 +1,7 @@
 # MiddlewareChat
 Welcome to this Client-Server Chat !
 ----------
+By : Ayoub Mourabit, Yahya Naji
 **********************************
 Eclipse SDK Version: Neon (4.6)\
 Java Version : 8\
